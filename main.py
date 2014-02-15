@@ -27,7 +27,8 @@ def getData():
                 first = False
                 continue
             
-            row = re.split(r'\t+',row[0])
+            #row = re.split(r'\t+',row[0]) #only if seperated by tabs
+            
             Data.append({'coord':[float(row[0]),float(row[1])],'visited':False,'member':False})
     
     
