@@ -33,11 +33,19 @@ class cluster:
     
     def getY(self):
         return self.Y
+    
+    def has(self,point):
+        
+        if point in self.pList:
+            return True
+        
+        return False
         
     def printPoints(self):
         print self.name+' Points:'
         print '-----------------'
         print self.pList
+        print len(self.pList)
         print '-----------------'
     
         

@@ -11,6 +11,9 @@ class dbscanner:
     
     dataSet = []
     count = 0
+    visited = []
+    member = []
+    Clusters = []
     
     def dbscan(self,D,eps,MinPts):
         self.dataSet = D
@@ -21,65 +24,70 @@ class dbscanner:
         
         C = -1
         Noise = cluster('Noise')
+        
         for point in D:
-            if point['visited']:
-                continue
-            
-            point['visited'] = True #point visited
-            NeighbourPoints = self.regionQuery(point['coord'],eps)
-            
-            if len(NeighbourPoints) < MinPts:
-                Noise.addPoint(point['coord'])
-                point['member']=True
-            else:
-                name = 'Cluster'+str(self.count);
-                C = cluster(name)
-                self.count+=1;
-                self.expandCluster(point,NeighbourPoints,C,eps,MinPts)
-                X = C.getX()
-                Y = C.getY()
-                plot(X,Y,'o',label=name)
-                #s=[15 for i in range(len(X))]
-                #scatter(X,Y,label=name,s=s)
-                hold(True)
+            if point not in self.visited:
+                self.visited.append(point)
+                NeighbourPoints = self.regionQuery(point,eps)
                 
-                C.printPoints()
-        X = Noise.getX()
-        Y = Noise.getY()
-        plot(X,Y,'x',label='Noise')
+                if len(NeighbourPoints) < MinPts:
+                    Noise.addPoint(point)
+                else:
+                    name = 'Cluster'+str(self.count);
+                    C = cluster(name)
+                    self.count+=1;
+                    self.expandCluster(point,NeighbourPoints,C,eps,MinPts)
+                    
+                    plot(C.getX(),C.getY(),'o',label=name)
+                    hold(True)
+        
+        if len(Noise.getPoints())!=0:
+            plot(Noise.getX(),Noise.getY(),'x',label='Noise')
+            
         hold(False)
         legend(loc='lower left')
         grid(True)
         show()
-        Noise.printPoints()
-        
+                    
+                    
+            
     
     def expandCluster(self,point,NeighbourPoints,C,eps,MinPts):
-        C.addPoint(point['coord'])
-        point['member']=True
+        
+        C.addPoint(point)
         
         for p in NeighbourPoints:
-            if not p['visited']:
-                p['visited'] = True
-                np = self.regionQuery(p['coord'],eps)
+            if p not in self.visited:
+                self.visited.append(p)
+                np = self.regionQuery(p,eps)
                 if len(np) >= MinPts:
-                    NeighbourPoints = NeighbourPoints + np
-            if not p['member']:
-                C.addPoint(p['coord'])
-                p['member'] = True
+                    for n in np:
+                        if n not in NeighbourPoints:
+                            NeighbourPoints.append(n)
+                    
+            for c in self.Clusters:
+                if not c.has(p):
+                    if not C.has(p):
+                        C.addPoint(p)
+                        
+            if len(self.Clusters) == 0:
+                if not C.has(p):
+                    C.addPoint(p)
+                        
+        self.Clusters.append(C)
+        
+        #C.printPoints()
+        
+                    
+                
                      
     def regionQuery(self,P,eps):
         result = []
         for d in self.dataSet:
-            if self.dist(P,d['coord']) < eps:
+            if (((d[0]-P[0])**2 + (d[1] - P[1])**2)**0.5)<=eps:
                 result.append(d)
         return result
     
-    def dist(self,P,d):
-        squaredSum = 0
-        for dim in range(len(P)):
-            squaredSum += (P[dim]-d[dim])**2
-        return squaredSum**0.5
             
             
             

@@ -9,7 +9,7 @@ import csv
 import re
 
 configPath = '/home/sushant/config'
-dataPath = '/home/sushant/check.csv'
+dataPath = '/home/sushant/abc.csv'
 
 def main():
     [Data,eps,MinPts]= getData()
@@ -21,19 +21,19 @@ def getData():
 
     with open(dataPath,'rb') as f:
         reader = csv.reader(f)
-        first = True
+        first = False
         for row in reader:
             if first:
                 first = False
                 continue
+            #row = re.split(r'\t+',row[0])
+            Data.append([float(row[0]),float(row[1])])
             
-            #row = re.split(r'\t+',row[0]) #only if seperated by tabs
-            
-            Data.append({'coord':[float(row[0]),float(row[1])],'visited':False,'member':False})
-    
-    
     f = open(configPath,'r')
+    
     [eps,MinPts] = parse(f.readline())
+    
+    print eps,MinPts
     
     return [Data,eps,MinPts]
 
