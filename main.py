@@ -21,11 +21,7 @@ def getData():
 
     with open(dataPath,'rb') as f:
         reader = csv.reader(f)
-        first = False
         for row in reader:
-            if first:
-                first = False
-                continue
             #row = re.split(r'\t+',row[0])
             Data.append([float(row[0]),float(row[1])])
             
