@@ -19,8 +19,8 @@ class dbscanner:
         self.dataSet = D
         
         title(r'DBSCAN Algorithm', fontsize=18)
-        xlabel(r'X Coordinates',fontsize=17)
-        ylabel(r'Y Coordinates', fontsize=17)
+        xlabel(r'Dim 1',fontsize=17)
+        ylabel(r'Dim 2', fontsize=17)
         
         C = -1
         Noise = cluster('Noise')
