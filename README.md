@@ -16,10 +16,10 @@ UPDATE: July 13, 2017 - The code has been updated to support 3D points. Although
 <h2>Few Snapshots</h2>
 
 <h3>2-D Clustering in action</h3>
-![Alt text](img/figure_2D.png?raw=true "Title")
+![alt text](http://DBSCAN/img/figure_2D.png)
 
 <h3>3-D Clustering in action</h3>
-![Alt text](img/figure_3D.png?raw=true "Title")
+![alt text](http://DBSCAN/img/figure_3D.png)
 
 
 
