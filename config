@@ -1,1 +1,9 @@
-3 2
+# maximum allowable distance for neighbouring points
+eps = 3
+
+# minimum number of neighbours surrounding a point
+# to be considered a cluster point
+min_pts = 2
+
+# dimension of the dataset
+dim = 2
