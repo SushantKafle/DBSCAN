@@ -16,10 +16,10 @@ UPDATE: July 13, 2017 - The code has been updated to support 3D points. Although
 <h2>Few Snapshots</h2>
 
 <h3>2-D Clustering in action</h3>
-![alt text](http://DBSCAN/img/figure_2D.png)
+<img src='https://raw.githubusercontent.com/SushantKafle/DBSCAN/master/img/figure_2D.png'>
 
 <h3>3-D Clustering in action</h3>
-![alt text](http://DBSCAN/img/figure_3D.png)
+<img src='https://raw.githubusercontent.com/SushantKafle/DBSCAN/master/img/figure_3D.png'>
 
 
 
