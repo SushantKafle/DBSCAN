@@ -9,20 +9,20 @@ import re, csv, sys
 
 
 CONFIG = 'config'
-DATA = 'data/jain.csv'
+DATA = 'data/test.csv'
 
 def get_data(config):
     data = []
     with open(DATA, 'rb') as file_obj:
         csv_reader = csv.reader(file_obj)
-        for row in csv_reader:
+        for id_, row in enumerate(csv_reader):
             if len(row) < config['dim']:
                 print ("ERROR: The data you have provided has fewer \
                     dimensions than expected (dim = %d < %d)"
                     % (config['dim'], len(row)))
                 sys.exit()
             else:
-                point = {}
+                point = {'id':id_}
                 for dim in range(0, config['dim']):
                     point[dim] = float(row[dim])
                 data.append(point)
