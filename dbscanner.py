@@ -91,13 +91,18 @@ class DBScanner:
                             cluster.add_point(p)
         self.clusters.add(cluster)
                     
-                
+    
+    def get_distance(self, from_point, to_point):
+        p1 = [from_point[k] for k in range(self.dim)]
+        p2 = [to_point[k] for k in range(self.dim)]
+        return distance.euclidean(p1, p2)
+
                      
     def region_query(self, point):
         result = []
         for d_point in self.data:
             if d_point != point:
-                if distance.euclidean(point.values(), d_point.values()) <= self.eps:
+                if self.get_distance(d_point, point) <= self.eps:
                     result.append(d_point)
         return result
 
