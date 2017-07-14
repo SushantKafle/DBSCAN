@@ -35,8 +35,6 @@ class DBScanner:
         
         #default noise cluster
         noise = Cluster('Noise', self.dim)
-        self.clusters.add(noise)
-
         for point in data:
             if point not in self.visited:
                 self.visited.append(point)
@@ -89,6 +87,11 @@ class DBScanner:
                     if not other_cluster.has(p):
                         if not cluster.has(p):
                             cluster.add_point(p)
+
+                if self.cluster_count == 0:
+                    if not cluster.has(p):
+                        cluster.add_point(p)
+                        
         self.clusters.add(cluster)
                     
     
