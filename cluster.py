@@ -28,7 +28,7 @@ class Cluster(object):
 
     def get_Z(self):
         if self.dim > 2:
-            return [p[3] for p in self.points]
+            return [p[2] for p in self.points]
         return None
     
     def has(self, point):
