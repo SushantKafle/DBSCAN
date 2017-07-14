@@ -15,13 +15,12 @@ class DBScanner:
         self.eps = config['eps']
         self.min_pts = config['min_pts']
         self.dim = config['dim']
-        self.clusters = []
+        self.clusters = set()
         self.cluster_count = 0
         self.visited = []
         self.color = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']
     
     def dbscan(self, data):
-        
         self.init_params()
         self.data = data
 
@@ -36,6 +35,8 @@ class DBScanner:
         
         #default noise cluster
         noise = Cluster('Noise', self.dim)
+        self.clusters.add(noise)
+
         for point in data:
             if point not in self.visited:
                 self.visited.append(point)
@@ -64,13 +65,13 @@ class DBScanner:
             else:
                 ax.scatter(noise.get_X(), noise.get_Y(), marker = 'x', label = noise.name)
         
+        print ("Number of clusters found: %d" % self.cluster_count)
+        
         ax.hold(False)
         ax.legend(loc='lower left')
         ax.grid(True)
         plt.title(r'DBSCAN Clustering', fontsize=18)
         plt.show()
-
-        print ("Number of clusters found: %d" % self.cluster_count)
                     
 
     def expand_cluster(self, cluster, point, neighbour_pts):
@@ -84,28 +85,24 @@ class DBScanner:
                         if n not in neighbour_pts:
                             neighbour_pts.append(n)
                     
-            for other_cluster in self.clusters:
-                if not other_cluster.has(p):
-                    if not cluster.has(p):
-                        cluster.add_point(p)
-                        
-            if len(self.clusters) == 0:
-                if not cluster.has(p):
-                    cluster.add_point(p)
-                        
-        self.clusters.append(cluster)
+                for other_cluster in self.clusters:
+                    if not other_cluster.has(p):
+                        if not cluster.has(p):
+                            cluster.add_point(p)
+        self.clusters.add(cluster)
                     
                 
                      
     def region_query(self, point):
         result = []
         for d_point in self.data:
-            if distance.euclidean(point.values(), d_point.values()) <= self.eps:
-                result.append(d_point)
+            if d_point != point:
+                if distance.euclidean(point.values(), d_point.values()) <= self.eps:
+                    result.append(d_point)
         return result
 
     def init_params(self):
-        self.clusters = []
+        self.clusters = set()
         self.cluster_count = 0
         self.visited = []
 

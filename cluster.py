@@ -3,52 +3,39 @@ Created on Feb 13, 2014
 
 @author: sushant
 '''
+import numpy as np
 
-class Cluster:
+class Cluster(object):
     def __init__(self,  name, dim):
         self.name = name
         self.dim = dim
-        self.pt_list = []
-        self.X = []
-        self.Y = []
-        self.Z = []
+        self.points = []
     
     def add_point(self, point):
-        self.pt_list.append(point)
-        self.X.append(point[0])
-        self.Y.append(point[1])
-
-        ## if 3D
-        if self.dim > 2:
-            self.Z.append(point[2])
-
-    def get_points(self):
-        if self.dim > 2:
-            return [self.X, self.Y, self.Z]
+        self.points.append(point)
         
-        return [self.X, self.Y]
+    def get_points(self):
+        return self.points
     
     def erase(self):
-        self.pList = []
+        self.points = []
     
     def get_X(self):
-        return self.X
+        return [p[0] for p in self.points]
     
     def get_Y(self):
-        return self.Y
+        return [p[1] for p in self.points]
 
     def get_Z(self):
-        return self.Z
+        if self.dim > 2:
+            return [p[3] for p in self.points]
+        return None
     
-    def has(self,point):
-        point in self.pt_list
+    def has(self, point):
+        return point in self.points
             
     def __str__(self):
-        print self.name + ' Points:'
-        print '-----------------'
-        print self.pt_list
-        print len(self.pt_list)
-        print '-----------------\n'
+        return "%s: %d points" % (self.name, len(self.points))
     
         
         

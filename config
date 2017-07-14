@@ -1,5 +1,5 @@
 # maximum allowable distance for neighbouring points
-eps = 3
+eps = 2.5
 
 # minimum number of neighbours surrounding a point
 # to be considered a cluster point

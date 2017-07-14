@@ -9,7 +9,7 @@ import re, csv, sys
 
 
 CONFIG = 'config'
-DATA = 'data/abc.csv'
+DATA = 'data/jain.csv'
 
 def get_data(config):
     data = []
@@ -36,11 +36,14 @@ def read_config():
             for line in file_obj:
                 if line[0] != '#' and line.strip() !='':
                     key, value = line.split('=')
-                    config[key.strip()] = int(value.strip())
+                    if '.' in value.strip():
+                        config[key.strip()] = float(value.strip())
+                    else:
+                        config[key.strip()] = int(value.strip())
     except:
         print ("Error reading the configuration file.\
             expected lines: param = value \n param = {eps, min_pts, dim}, \
-            value = integer values")
+            value = {float, int, int}")
         sys.exit()
     return config
 
