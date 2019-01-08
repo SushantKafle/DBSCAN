@@ -22,9 +22,9 @@ def get_data(config):
                     % (config['dim'], len(row)))
                 sys.exit()
             else:
-                point = {'id':id_}
+                point = {'id':id_, 'value': []}
                 for dim in range(0, config['dim']):
-                    point[dim] = float(row[dim])
+                    point['value'].append(float(row[dim]))
                 data.append(point)
     return data
 
@@ -50,11 +50,11 @@ def read_config():
 def main():
 
     config = read_config()
-
     dbc = DBScanner(config)
     data = get_data(config)
 
     dbc.dbscan(data)
+    dbc.export()
 
 if __name__ == "__main__":
     main()

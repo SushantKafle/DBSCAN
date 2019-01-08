@@ -98,8 +98,8 @@ class DBScanner:
                     
     
     def get_distance(self, from_point, to_point):
-        p1 = [from_point[k] for k in range(self.dim)]
-        p2 = [to_point[k] for k in range(self.dim)]
+        p1 = [from_point['value'][k] for k in range(self.dim)]
+        p2 = [to_point['value'][k] for k in range(self.dim)]
         return distance.euclidean(p1, p2)
 
                      
@@ -110,6 +110,18 @@ class DBScanner:
                 if self.get_distance(d_point, point) <= self.eps:
                     result.append(d_point)
         return result
+
+
+    def export(self, export_file="cluster_dump"):
+        with open(export_file, 'w') as dump_file:
+            for cluster in self.clusters:
+                for point in cluster.points:
+                    csv_point = ','.join(map(str, point['value']))
+                    dump_file.write("%s;%s\n" % (csv_point, cluster.name))
+        print ("Cluster dumped at: %s" % export_file)
+
+
+
 
     def init_params(self):
         self.clusters = set()

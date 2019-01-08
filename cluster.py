@@ -21,14 +21,14 @@ class Cluster(object):
         self.points = []
     
     def get_X(self):
-        return [p[0] for p in self.points]
+        return [p['value'][0] for p in self.points]
     
     def get_Y(self):
-        return [p[1] for p in self.points]
+        return [p['value'][1] for p in self.points]
 
     def get_Z(self):
         if self.dim > 2:
-            return [p[2] for p in self.points]
+            return [p['value'][2] for p in self.points]
         return None
     
     def has(self, point):
